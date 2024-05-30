@@ -1,11 +1,14 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace VKB_Mobiflight_Definer
 {
     internal class SubDevice
     {
-        protected readonly List<Button> Buttons = [];
-        protected readonly List<Led> Leds = [];
+        protected readonly List<Button> Buttons = new List<Button>();
+        protected readonly List<Led> Leds = new List<Led>();
         public bool useLeds = true;
         public bool useButtons = true;
         public string DescriptiveName;
@@ -17,12 +20,13 @@ namespace VKB_Mobiflight_Definer
                 string ButtonFilePath = String.Format("Buttons\\{0}.csv", ButtonFile);
                 if (File.Exists(ButtonFilePath))
                 {
-                    using StreamReader sr = File.OpenText(ButtonFilePath);
-                    string? Line;
+                    StreamReader sr = File.OpenText(ButtonFilePath);
+                    string Line;
                     while ((Line = sr.ReadLine()) != null)
                     {
                         Buttons.Add(Button.FromCsv(Line));
                     }
+                    sr.Close();
                 }
             }
             if (LedFile.Length > 0)
@@ -30,12 +34,13 @@ namespace VKB_Mobiflight_Definer
                 string LedFilePath = String.Format("LEDs\\{0}.csv", LedFile);
                 if (File.Exists(LedFilePath))
                 {
-                    using StreamReader sr = File.OpenText(LedFilePath);
-                    string? Line;
+                    StreamReader sr = File.OpenText(LedFilePath);
+                    string Line;
                     while ((Line = sr.ReadLine()) != null)
                     {
                         Leds.Add(Led.FromCsv(Line));
                     }
+                    sr.Close();
                 }
             }
         }
@@ -45,14 +50,14 @@ namespace VKB_Mobiflight_Definer
             if (useButtons)
                 return Buttons;
             else
-                return [];
+                return new List<Button>();
         }
         public List<Led> GetLeds()
         {
             if (useLeds)
                 return Leds;
             else
-                return [];
+                return new List<Led>();
         }
         public int GetNumberOfButtons()
         {

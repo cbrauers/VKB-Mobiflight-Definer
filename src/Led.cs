@@ -1,24 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace VKB_Mobiflight_Definer
 {
-    internal class Led(int number, string colors, string label, string id)
+    internal class Led
     {
-        private readonly int ledNoInSubDevice = number;
-        private readonly string ledBaseLabel = label;
-        private readonly string ledBaseId = id;
+        private readonly int ledNoInSubDevice;
+        private readonly string ledBaseLabel;
+        private readonly string ledBaseId;
         public int ledBaseNo = 1;
         public string ledLabelPrefix = "";
         public string ledIdPrefix = "";
-        private readonly string colorChannels = colors;
+        private readonly string colorChannels;
+
+        public Led(int number, string colors, string label, string id)
+        {
+            ledNoInSubDevice = number;
+            ledBaseLabel = label;
+            ledBaseId = id;
+            colorChannels = colors;
+        }
 
         public static Led FromCsv(string csv)
         {
-            string[] csvparts = csv.Split(",");
+            string[] csvparts = csv.Split(',');
             int buttonNo = ((int)Convert.ToDecimal(csvparts[0]));
             string colors = csvparts[1];
             string label = csvparts[2];
@@ -65,13 +74,21 @@ namespace VKB_Mobiflight_Definer
                 return GetLedId() + "." + ColorName(channel);
             }
         }
-        private static string ColorName(char channel) => channel switch
+        private static string ColorName(char channel)
         {
-            'R' => "Red",
-            'G' => "Green",
-            'B' => "Blue",
-            _ => string.Format("{0}", channel),
-        };
+            switch (channel)
+            {
+                case 'R':
+                    return "Red";
+                case 'G':
+                    return "Green";
+                case 'B':
+                    return "Blue";
+                default:
+                    return string.Format("{0}", channel);
+            }
+        }
+
         public void WriteOut(StreamWriter sw)
         {
             int channelno = 0;

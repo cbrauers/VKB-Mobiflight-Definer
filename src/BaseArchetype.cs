@@ -1,8 +1,12 @@
 ﻿namespace VKB_Mobiflight_Definer
 {
-    internal class BaseArchetype(string DescName, string ButtonFile, string LedFile) : SubDeviceArchetype(DescName, ButtonFile, LedFile)
+    internal class BaseArchetype : SubDeviceArchetype
     {
-        public Base Instantiate() => new(DescriptiveName, ButtonFileName, LedFileName);
+        public BaseArchetype(string DescName, string ButtonFile, string LedFile) : base(DescName, ButtonFile, LedFile)
+        {
+        }
+
+        public Base Instantiate() => new Base(DescriptiveName, ButtonFileName, LedFileName);
         public static BaseArchetype FromCsv(string csv)
         {
             string[] csvparts = csv.Split(',');

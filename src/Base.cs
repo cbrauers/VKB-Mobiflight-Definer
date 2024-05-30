@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace VKB_Mobiflight_Definer
 {
-    internal class Base(string DescName, string ButtonFile, string LedFile) : SubDevice(DescName, ButtonFile, LedFile)
+    internal class Base : SubDevice
     {
+        public Base(string DescName, string ButtonFile, string LedFile) : base(DescName, ButtonFile, LedFile)
+        {
+        }
+
         public static Base FromCsv(string csv)
         {
             string[] csvparts = csv.Split(',');

@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace VKB_Mobiflight_Definer
 {
-    internal class ModuleArchetype(string DescName, string Label, string Id, string ButtonFile, string LedFile) : SubDeviceArchetype(DescName, ButtonFile, LedFile)
+    internal class ModuleArchetype : SubDeviceArchetype
     {
-        public string LabelPrefix = Label;
-        public string IdPrefix = Id;
+        public string LabelPrefix;
+        public string IdPrefix;
         private int ModulesCreated = 0;
+
+        public ModuleArchetype(string DescName, string Label, string Id, string ButtonFile, string LedFile) : base(DescName, ButtonFile, LedFile)
+        {
+            LabelPrefix = Label;
+            IdPrefix = Id;
+        }
+
         public static ModuleArchetype FromCsv(string csv)
         {
             string[] csvparts = csv.Split(',');

@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 
 namespace VKB_Mobiflight_Definer
 {
-    internal class Module(string DescName, string Label, string Id, string ButtonFile, string LedFile) : SubDevice(DescName, ButtonFile, LedFile)
+    internal class Module : SubDevice
     {
-        public string LabelPrefix = Label;
-        public string IdPrefix = Id;
+        public string LabelPrefix;
+        public string IdPrefix;
         public int LedBase = 10;
         public int ButtonBase = 1;
+
+        public Module(string DescName, string Label, string Id, string ButtonFile, string LedFile) : base(DescName, ButtonFile, LedFile)
+        {
+            LabelPrefix = Label;
+            IdPrefix = Id;
+        }
+
         public static Module FromCsv(string csv)
         {
             string[] csvparts = csv.Split(',');

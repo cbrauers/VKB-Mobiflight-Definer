@@ -1,18 +1,26 @@
 ﻿using HidSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace VKB_Mobiflight_Definer
 {
-    internal class JoystickDevice(HidDevice device)
+    internal class JoystickDevice
     {
-        public readonly int Pid = device.ProductID;
-        public readonly string InstanceName = device.GetProductName();
-        private Base? BaseType;
-        private readonly List<Module> Modules = [];
+        public readonly int Pid;
+        public readonly string InstanceName;
+        private Base BaseType = null;
+        private readonly List<Module> Modules = new List<Module>();
+
+        public JoystickDevice(HidDevice device)
+        {
+            Pid = device.ProductID;
+            InstanceName = device.GetProductName();
+        }
+
         public void SetBase(Base baseref)
         {
             BaseType = baseref;
@@ -34,8 +42,8 @@ namespace VKB_Mobiflight_Definer
         }
         public List<Button> GetButtons()
         {
-            if (BaseType == null) return [];
-            List<Button> ret = new(BaseType.GetButtons());
+            if (BaseType == null) return new List<Button>();
+            List<Button> ret = new List<Button>(BaseType.GetButtons());
             foreach (var module in Modules)
             {
                 ret.AddRange(module.GetButtons());
@@ -44,8 +52,8 @@ namespace VKB_Mobiflight_Definer
         }
         public List<Led> GetLeds()
         {
-            if (BaseType == null) return [];
-            List<Led> ret = new(BaseType.GetLeds());
+            if (BaseType == null) return new List<Led>();
+            List<Led> ret = new List<Led>(BaseType.GetLeds());
             foreach (var module in Modules)
             {
                 ret.AddRange(module.GetLeds());

@@ -1,17 +1,19 @@
 ﻿
 using HidSharp;
-using System.ComponentModel;
-using System.Reflection.Metadata.Ecma335;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace VKB_Mobiflight_Definer
 {
     internal class Program
     {
-        private static readonly List<BaseArchetype> BaseArchetypes = [];
-        private static readonly List<ModuleArchetype> ModuleArchetypes = [];
+        private static readonly List<BaseArchetype> BaseArchetypes = new List<BaseArchetype>();
+        private static readonly List<ModuleArchetype> ModuleArchetypes = new List<ModuleArchetype>();
         private static void Main(string[] args)
         {
-            HidDevice[] DevList = DeviceList.Local.GetHidDevices(vendorID: 0x231D).ToArray();
+            HidDevice[] DevList = Enumerable.ToArray(DeviceList.Local.GetHidDevices(vendorID: 0x231D));
             Console.WriteLine("Please select your device from the following list:");
             int listlength = DevList.Length;
             string SerialNumber;
@@ -40,7 +42,7 @@ namespace VKB_Mobiflight_Definer
             }
             catch (IOException) { }
             Console.WriteLine(string.Format("Product ID: {0:X}; Serial Number: {1}", ChosenDevice.ProductID, SerialNumber));
-            JoystickDevice TestDevice = new(ChosenDevice);
+            JoystickDevice TestDevice = new JoystickDevice(ChosenDevice);
             PopulateBases();
             listlength = BaseArchetypes.Count;
             Console.WriteLine("Select your base:");
@@ -154,12 +156,13 @@ namespace VKB_Mobiflight_Definer
             string BasesFilePath = "Bases.csv";
             if (File.Exists(BasesFilePath))
             {
-                using StreamReader sr = File.OpenText(BasesFilePath);
-                string? Line;
+                StreamReader sr = File.OpenText(BasesFilePath);
+                string Line;
                 while ((Line = sr.ReadLine()) != null)
                 {
                     BaseArchetypes.Add(BaseArchetype.FromCsv(Line));
                 }
+                sr.Close();
             }
         }
         private static void PopulateModules()
@@ -167,12 +170,13 @@ namespace VKB_Mobiflight_Definer
             string ModulesFilePath = "Modules.csv";
             if (File.Exists(ModulesFilePath))
             {
-                using StreamReader sr = File.OpenText(ModulesFilePath);
-                string? Line;
+                StreamReader sr = File.OpenText(ModulesFilePath);
+                string Line;
                 while ((Line = sr.ReadLine()) != null)
                 {
                     ModuleArchetypes.Add(ModuleArchetype.FromCsv(Line));
                 }
+                sr.Close();
             }
         }
         private static int PromptNumber(string message, int minvalue = 1, int maxvalue = 0, int defaultvalue = -1)
@@ -204,7 +208,7 @@ namespace VKB_Mobiflight_Definer
                         Console.Write("{0}: ", message);
                     }
                 }
-                String ? entry = Console.ReadLine();
+                String entry = Console.ReadLine();
                 if (entry != null && entry == "" && defaultvalue >= 0)
                 {
                     selection = defaultvalue;
@@ -225,7 +229,7 @@ namespace VKB_Mobiflight_Definer
             bool rowofunderscores = true;
             foreach (char c in name)
             {
-                if (Char.IsAsciiLetterOrDigit(c))
+                if (c<256 && Char.IsLetterOrDigit(c))
                 {
                     outstring += (Char.ToLower(c));
                     rowofunderscores = false;
