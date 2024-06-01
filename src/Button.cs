@@ -28,7 +28,12 @@ namespace VKB_Mobiflight_Definer
             return new Button(buttonNo, label);
         }
 
-        public int GetButtonNumber() { return buttonBaseId - 1 + buttonNoInSubDevice; }
+        public int GetButtonNumber() { 
+            if(buttonBaseId < 1000)
+                return buttonBaseId - 1 + buttonNoInSubDevice;
+            else
+                return buttonBaseId;
+        }
         public string GetButtonLabel()
         {
             if (buttonLabelPrefix.Length < 1)

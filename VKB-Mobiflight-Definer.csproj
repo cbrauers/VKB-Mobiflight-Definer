@@ -44,6 +44,9 @@
     <None Include="Buttons\FSMGA.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Buttons\MTGL.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Buttons\NXT.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -63,6 +66,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Buttons\THQ_WW2.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Encoders\EVO.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Encoders\FSMGA.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Encoders\MTGL.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Encoders\NXT.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Encoders\STECS_ATEM.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Encoders\STEM.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="LEDs\FSMGA.csv">
@@ -108,6 +129,7 @@
     <Compile Include="src\Base.cs" />
     <Compile Include="src\BaseArchetype.cs" />
     <Compile Include="src\Button.cs" />
+    <Compile Include="src\Encoder.cs" />
     <Compile Include="src\JoystickDevice.cs" />
     <Compile Include="src\Led.cs" />
     <Compile Include="src\Module.cs" />

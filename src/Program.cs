@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Services;
 
 namespace VKB_Mobiflight_Definer
 {
@@ -13,9 +14,15 @@ namespace VKB_Mobiflight_Definer
         private static readonly List<ModuleArchetype> ModuleArchetypes = new List<ModuleArchetype>();
         private static void Main(string[] args)
         {
-            HidDevice[] DevList = Enumerable.ToArray(DeviceList.Local.GetHidDevices(vendorID: 0x231D));
+            IEnumerable<HidDevice> RawDevList = DeviceList.Local.GetHidDevices(vendorID: 0x231D);
+            List<HidDevice> DevList = new List<HidDevice>();
+            foreach(HidDevice dev in RawDevList)
+            {
+                if (dev.GetReportDescriptor().FeatureReports.Count() == 0) continue;
+                DevList.Add(dev);
+            }
             Console.WriteLine("Please select your device from the following list:");
-            int listlength = DevList.Length;
+            int listlength = DevList.Count();
             string SerialNumber;
             for (int i = 0; i < listlength; i++)
             {
@@ -29,7 +36,7 @@ namespace VKB_Mobiflight_Definer
                 }
                 catch (IOException) { }
 
-                Console.WriteLine(string.Format("{0})  \"{1}\" PID: {2:X}, S/N: {3}", i + 1, ProductName, ProductId, SerialNumber));
+                Console.WriteLine(string.Format("{0})  \"{1}\" PID: {2:X4}, S/N: {3}", i + 1, ProductName, ProductId, SerialNumber));
             }
             int selection = PromptNumber("Device", 1, listlength);
             int deviceId = selection - 1;
@@ -42,7 +49,7 @@ namespace VKB_Mobiflight_Definer
             }
             catch (IOException) { }
             Console.WriteLine(string.Format("Product ID: {0:X}; Serial Number: {1}", ChosenDevice.ProductID, SerialNumber));
-            JoystickDevice TestDevice = new JoystickDevice(ChosenDevice);
+            JoystickDevice Device = new JoystickDevice(ChosenDevice);
             PopulateBases();
             listlength = BaseArchetypes.Count;
             Console.WriteLine("Select your base:");
@@ -51,12 +58,13 @@ namespace VKB_Mobiflight_Definer
                 Console.WriteLine("{0}) {1}", i + 1, BaseArchetypes[i].DescriptiveName);
             }
             selection = PromptNumber("Base", 1, listlength);
-            TestDevice.SetBase(BaseArchetypes[selection-1]);
+            Device.SetBase(BaseArchetypes[selection-1]);
             PopulateModules();
 
             listlength = ModuleArchetypes.Count;
             int buttonindex = -1;
             int ledindex = 10;
+            int definableEncoders = 0;
             int modulechoice;
             do
             {
@@ -69,13 +77,14 @@ namespace VKB_Mobiflight_Definer
                 modulechoice = PromptNumber("Add Module", 0, listlength);
                 if(modulechoice != 0)
                 {
-                    Module mod = TestDevice.AddModule(ModuleArchetypes[modulechoice-1]);
+                    Module mod = Device.AddModule(ModuleArchetypes[modulechoice-1]);
                     int modbuttons = mod.GetNumberOfButtons();
                     if (modbuttons != 0)
                     {
                         if (buttonindex + modbuttons > 128) buttonindex = -1;
                         Console.WriteLine("Please enter button number of first button in module ({0}),", mod.GetFirstButtonLabel());
                         Console.WriteLine("or 0 if you do not want button labels for this module.");
+                        Console.WriteLine("Use a button tester or logical button IDs in VKBDevCfg.");
                         int startbutton = PromptNumber("Button number", 0, 128 - modbuttons + 1, buttonindex);
                         if (startbutton != 0)
                         {
@@ -107,44 +116,56 @@ namespace VKB_Mobiflight_Definer
                         ledindex = startled + modleds;
                         if (ledindex + modleds > 63) ledindex = -1;
                     }
+                    definableEncoders += mod.GetNumberOfEncoders();
                     mod.Update();
                 }
             }
             while (modulechoice != 0);
-
-
-
-            /*
-
-            Module SCG = Module.FromCsv("SCG (LEDs only),SCG,SCG,,SCG");
-            SCG.LedBase = 10;
-            SCG.Update();
-            TestDevice.AddModule(SCG);
-            Module SEM = TestDevice.AddModule(ModuleArchetypes[1]);
-            SEM.ButtonBase = 33;
-            SEM.LedBase = 12;
-            SEM.Update();
-            SEM = TestDevice.AddModule(ModuleArchetypes[1]);
-            SEM.ButtonBase = 57;
-            SEM.LedBase = 20;
-            SEM.Update();
-            Module WW2Throttle = Module.FromCsv("THQ with WW2 grip,THQ,THQ,THQ_WW2,");
-            WW2Throttle.ButtonBase = 81;
-            WW2Throttle.Update();
-            TestDevice.AddModule(WW2Throttle);
-            Module FSMGA = Module.FromCsv("FSM.GA,FSM.GA,FSMGA,FSMGA,FSMGA");
-            FSMGA.LedBase = 28;
-            FSMGA.ButtonBase = 97;
-            FSMGA.Update();
-            TestDevice.AddModule(FSMGA);
-            */
-
+            if(definableEncoders != 0)
+            {
+                Console.WriteLine("Your device contains encoders.");
+                Console.WriteLine("If your firmware is 2.17.9 or newer and you have Virtual BUS over USB enabled,");
+                Console.WriteLine("you can use the Encoder API for improved responsiveness.");
+                Console.WriteLine("Please enter 1 to use the Encoder API and 0 to skip it");
+                if(PromptNumber("Use Encoder API", 0, 1, 1) == 1)
+                {
+                    int encId = 0;
+                    int prevEncId = encId;
+                    foreach (Encoder enc in Device.BaseType.GetEncoders())
+                    {
+                        Console.WriteLine($"Please enter the encoder ID of the {enc.EncoderLabel} encoder on your base device");
+                        Console.WriteLine("Use the EncoderVisualizer tool to determine the encoder ID");
+                        Console.WriteLine("Enter 0 to skip this encoder");
+                        encId = PromptNumber("Encoder ID", 0, 0, prevEncId + 1);
+                        if (encId > 0)
+                        {
+                            enc.encoderId = encId;
+                            prevEncId = encId;
+                            Device.BaseType.AddButtons(enc.GetButtons());
+                        }
+                    }
+                    foreach(Module mod in Device.Modules)
+                    foreach (Encoder enc in mod.GetEncoders())
+                    {
+                        Console.WriteLine($"Please enter the encoder ID of the {mod.LabelPrefix} {enc.EncoderLabel} encoder on your {mod.DescriptiveName}");
+                        Console.WriteLine("Use the EncoderVisualizer tool to determine the encoder ID");
+                        Console.WriteLine("Enter 0 to skip this encoder");
+                        encId = PromptNumber("Encoder ID", 0, 0, prevEncId + 1);
+                        if (encId > 0)
+                        {
+                            enc.encoderId = encId;
+                            prevEncId = encId;
+                            mod.AddButtons(enc.GetButtons());
+                        }
+                    }
+                }
+            }
             Console.WriteLine("Thank you for your input.");
             if(!System.IO.Directory.Exists("output"))
                 System.IO.Directory.CreateDirectory("output");
-            string filename = String.Format("output\\{0}.joystick.json",NameToCamelCase(TestDevice.InstanceName.Trim()));
+            string filename = String.Format("output\\{0}.joystick.json",NameToCamelCase(Device.InstanceName.Trim()));
             StreamWriter sw = File.CreateText(filename);
-            TestDevice.WriteOut(sw);
+            Device.WriteOut(sw);
             sw.Flush();
             sw.Close();
             Console.WriteLine("Created definition file {0}", filename);

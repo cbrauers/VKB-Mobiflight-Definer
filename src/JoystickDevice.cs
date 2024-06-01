@@ -12,8 +12,8 @@ namespace VKB_Mobiflight_Definer
     {
         public readonly int Pid;
         public readonly string InstanceName;
-        private Base BaseType = null;
-        private readonly List<Module> Modules = new List<Module>();
+        public Base BaseType { get; private set; } = null;
+        public readonly List<Module> Modules = new List<Module>();
 
         public JoystickDevice(HidDevice device)
         {

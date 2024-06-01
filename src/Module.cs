@@ -37,6 +37,8 @@ namespace VKB_Mobiflight_Definer
                 led.ledIdPrefix = IdPrefix;
                 led.ledBaseNo = LedBase;
             }
+            foreach (var encoder in Encoders)
+                encoder.buttonLabelPrefix = LabelPrefix;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace VKB_Mobiflight_Definer
     {
         protected readonly List<Button> Buttons = new List<Button>();
         protected readonly List<Led> Leds = new List<Led>();
+        protected readonly List<Encoder> Encoders = new List<Encoder>();
         public bool useLeds = true;
         public bool useButtons = true;
         public string DescriptiveName;
@@ -25,6 +26,17 @@ namespace VKB_Mobiflight_Definer
                     while ((Line = sr.ReadLine()) != null)
                     {
                         Buttons.Add(Button.FromCsv(Line));
+                    }
+                    sr.Close();
+                }
+                string EncoderFilePath = String.Format("Encoders\\{0}.csv", ButtonFile);
+                if (File.Exists(EncoderFilePath))
+                {
+                    StreamReader sr = File.OpenText(EncoderFilePath);
+                    string Line;
+                    while ((Line = sr.ReadLine()) != null)
+                    {
+                       Encoders.Add(Encoder.FromCsv(Line));
                     }
                     sr.Close();
                 }
@@ -59,6 +71,18 @@ namespace VKB_Mobiflight_Definer
             else
                 return new List<Led>();
         }
+        public List<Encoder> GetEncoders()
+        {
+            return Encoders;
+        }
+        public void AddButton(Button button)
+        {
+            Buttons.Add(button);
+        }
+        public void AddButtons(IEnumerable<Button> buttons)
+        {
+            Buttons.AddRange(buttons);
+        }
         public int GetNumberOfButtons()
         {
             return Buttons.Count;
@@ -66,6 +90,10 @@ namespace VKB_Mobiflight_Definer
         public int GetNumberOfLeds()
         {
             return Leds.Count;
+        }
+        public int GetNumberOfEncoders()
+        {
+            return Encoders.Count;
         }
         public string GetFirstButtonLabel()
         {
