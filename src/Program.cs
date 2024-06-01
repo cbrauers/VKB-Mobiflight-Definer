@@ -64,7 +64,7 @@ namespace VKB_Mobiflight_Definer
             listlength = ModuleArchetypes.Count;
             int buttonindex = -1;
             int ledindex = 10;
-            int definableEncoders = 0;
+            int definableEncoders = Device.BaseType.GetNumberOfEncoders();
             int modulechoice;
             do
             {
