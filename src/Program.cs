@@ -139,7 +139,7 @@ namespace VKB_Mobiflight_Definer
                         encId = PromptNumber("Encoder ID", 0, 0, prevEncId + 1);
                         if (encId > 0)
                         {
-                            enc.encoderId = encId;
+                            enc.encoderId = encId-1;
                             prevEncId = encId;
                             Device.BaseType.AddButtons(enc.GetButtons());
                         }
@@ -153,7 +153,7 @@ namespace VKB_Mobiflight_Definer
                         encId = PromptNumber("Encoder ID", 0, 0, prevEncId + 1);
                         if (encId > 0)
                         {
-                            enc.encoderId = encId;
+                            enc.encoderId = encId-1;
                             prevEncId = encId;
                             mod.AddButtons(enc.GetButtons());
                         }
