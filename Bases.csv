@@ -1,5 +1,9 @@
-Gladiator NXT,NXT,NXT
-Gladiator NXT EVO,EVO,NXT
+Gladiator NXT with Space Combat Grip,NXT_SCG,NXT_SCG
+Gladiator NXT with F-14 Grip,NXT_F14,NXT
+Gladiator NXT with KG12 WW2 Grip,NXT_KG12,NXT
+Gladiator NXT EVO with Space Combat Grip,EVO_SCG,NXT_SCG
+Gladiator NXT EVO with F-14 Grip,EVO_F14,NXT
+Gladiator NXT EVO with KG12 WW2 Grip,EVO_KG12,NXT
 GNX-HID USB Controller,,NXT
 STECS without ATEM,STECS,STECS
 STECS with ATEM,STECS_ATEM,STECS

@@ -1,7 +1,9 @@
-SCG (LEDs only),SCG,SCG,,SCG
 SEM,SEM,SEM,SEM,SEM
 THQ,THQ,THQ,THQ,
 THQ with WW2 grip,THQ,THQ,THQ_WW2,
 FSM.GA,FSM.GA,FSMGA,FSMGA,FSMGA
-STEM,STEM,STEM,STEM,STEM
 Modern Throttle Grip Left,MTG-L,MTGL,MTGL,
+Modern Throttle Grip Right (Mini Config),MTG-R,MTGR,MTGR_Mini,
+Modern Throttle Grip Right (Standard/Max Config),MTG-R,MTGR,MTGR_Max,
+Modern Throttle Grip Right (All 5-way),MTG-R,MTGR,MTGR_5Way,
+STEM,STEM,STEM,STEM,STEM

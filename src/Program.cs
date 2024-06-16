@@ -59,11 +59,19 @@ namespace VKB_Mobiflight_Definer
             }
             selection = PromptNumber("Base", 1, listlength);
             Device.SetBase(BaseArchetypes[selection-1]);
+            int buttonindex = 1;
+            foreach (Button but in Device.BaseType.GetButtons()) 
+            {
+                if (but.GetButtonNumber() >= buttonindex) buttonindex = but.GetButtonNumber() + 1;
+            }
+            int ledindex = 10;
+            foreach (Led led in Device.BaseType.GetLeds())
+            {
+                if (led.GetLedNumber() >= ledindex) ledindex = led.GetLedNumber() + 1;
+            }
             PopulateModules();
 
             listlength = ModuleArchetypes.Count;
-            int buttonindex = -1;
-            int ledindex = 10;
             int definableEncoders = Device.BaseType.GetNumberOfEncoders();
             int modulechoice;
             do
