@@ -18,8 +18,15 @@ namespace VKB_Mobiflight_Definer
             List<HidDevice> DevList = new List<HidDevice>();
             foreach(HidDevice dev in RawDevList)
             {
-                if (dev.GetReportDescriptor().FeatureReports.Count() == 0) continue;
-                DevList.Add(dev);
+                try
+                {
+                    if (dev.GetReportDescriptor().FeatureReports.Count() == 0) continue;
+                    DevList.Add(dev);
+                }
+                catch (NotSupportedException)
+                {
+                    // Probably a virtual controller, we can skip it
+                }
             }
             Console.WriteLine("Please select your device from the following list:");
             int listlength = DevList.Count();
