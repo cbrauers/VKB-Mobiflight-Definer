@@ -1,0 +1,23 @@
+1,Aft Trigger
+2,Forward Trigger
+3,ENT
+4,OTS Push
+5,BRK Push
+6,MB1 Push
+7,RADIO Push
+8,MB2 Push
+9,OP EXEC Push
+10,BRK Up
+11,BRK Down
+12,BRK Fwd
+13,BRK Aft
+14,RADIO Down
+15,RADIO Up
+16,MB2 Left
+17,MB2 Right
+18,MB2 Down
+19,MB2 Up
+20,OTS Down
+21,OTS Aft
+22,OTS Up
+23,OTS Fwd
