@@ -38,9 +38,6 @@
     <None Include="Bases.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Buttons\MTGR2_5Way.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Buttons\MTGR2_Max.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -48,9 +45,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Buttons\MTGR_Max.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Buttons\MTGR_5Way.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Buttons\MTGR_Mini.csv">
@@ -102,6 +96,81 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Buttons\THQ_WW2.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\BRK\Buttons\1Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\BRK\Buttons\3Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\BRK\Buttons\5Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\BRK\Modules.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\Buttons\MTGR_StandardButtons.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\MB1\Buttons\1Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\MB1\Buttons\3Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\MB1\Buttons\5Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\MB1\Modules.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\MB2\Buttons\1Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\MB2\Buttons\3Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\MB2\Buttons\5Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\MB2\Modules.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\ModuleSlots.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\OpExec\Buttons\1Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\OpExec\Buttons\3Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\OpExec\Buttons\5Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\OpExec\Modules.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\OTS\Buttons\1Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\OTS\Buttons\5Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\OTS\Modules.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\Radio\Buttons\1Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\Radio\Buttons\3Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\Radio\Buttons\5Way.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Customizers\MTGR\Radio\Modules.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Encoders\EVO_KG12.csv">
@@ -186,6 +255,8 @@
     <Compile Include="src\Base.cs" />
     <Compile Include="src\BaseArchetype.cs" />
     <Compile Include="src\Button.cs" />
+    <Compile Include="src\customizers\MTGR\ModuleSlotArchetype.cs" />
+    <Compile Include="src\customizers\MTGR\MTGRCustomizer.cs" />
     <Compile Include="src\Encoder.cs" />
     <Compile Include="src\JoystickDevice.cs" />
     <Compile Include="src\Led.cs" />

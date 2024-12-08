@@ -13,16 +13,16 @@ namespace VKB_Mobiflight_Definer
         public int LedBase = 10;
         public int ButtonBase = 1;
 
-        public Module(string DescName, string Label, string Id, string ButtonFile, string LedFile) : base(DescName, ButtonFile, LedFile)
+        public Module(string DescName, string Label, string Id, string ButtonFile, string LedFile, string PathPrefix = "") : base(DescName, ButtonFile, LedFile, PathPrefix)
         {
             LabelPrefix = Label;
             IdPrefix = Id;
         }
 
-        public static Module FromCsv(string csv)
+        public static Module FromCsv(string csv, string PathPrefix = "")
         {
             string[] csvparts = csv.Split(',');
-            return new Module(csvparts[0], csvparts[1], csvparts[2], csvparts[3], csvparts[4]);
+            return new Module(csvparts[0], csvparts[1], csvparts[2], csvparts[3], csvparts[4], PathPrefix);
         }
         public void Update()
         {
@@ -39,6 +39,15 @@ namespace VKB_Mobiflight_Definer
             }
             foreach (var encoder in Encoders)
                 encoder.buttonLabelPrefix = LabelPrefix;
+        }
+        public void BakeInto(Module module)
+        {
+            ButtonBase = module.GetButtons().Last().GetButtonNumber() + 1;
+            Update();
+            foreach (Button button in Buttons)
+            {
+                module.AddButton(button.Bake());
+            }
         }
     }
 }

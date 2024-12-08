@@ -13,12 +13,12 @@ namespace VKB_Mobiflight_Definer
         public bool useLeds = true;
         public bool useButtons = true;
         public string DescriptiveName;
-        public SubDevice(string DescName, string ButtonFile, string LedFile)
+        public SubDevice(string DescName, string ButtonFile, string LedFile, string PathPrefix = "")
         {
             DescriptiveName = DescName;
             if(ButtonFile.Length > 0)
             {
-                string ButtonFilePath = String.Format("Buttons\\{0}.csv", ButtonFile);
+                string ButtonFilePath = String.Format("{1}Buttons\\{0}.csv", ButtonFile, PathPrefix);
                 if (File.Exists(ButtonFilePath))
                 {
                     StreamReader sr = File.OpenText(ButtonFilePath);
@@ -29,7 +29,7 @@ namespace VKB_Mobiflight_Definer
                     }
                     sr.Close();
                 }
-                string EncoderFilePath = String.Format("Encoders\\{0}.csv", ButtonFile);
+                string EncoderFilePath = String.Format("{1}Encoders\\{0}.csv", ButtonFile, PathPrefix);
                 if (File.Exists(EncoderFilePath))
                 {
                     StreamReader sr = File.OpenText(EncoderFilePath);
@@ -43,7 +43,7 @@ namespace VKB_Mobiflight_Definer
             }
             if (LedFile.Length > 0)
             {
-                string LedFilePath = String.Format("LEDs\\{0}.csv", LedFile);
+                string LedFilePath = String.Format("{1}LEDs\\{0}.csv", LedFile, PathPrefix);
                 if (File.Exists(LedFilePath))
                 {
                     StreamReader sr = File.OpenText(LedFilePath);

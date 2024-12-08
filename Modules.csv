@@ -5,8 +5,7 @@ FSM.GA,FSM.GA,FSMGA,FSMGA,FSMGA
 Modern Throttle Grip Left,MTG-L,MTGL,MTGL,
 Modern Throttle Grip Right Mk1 (Mini Config),MTG-R,MTGR,MTGR_Mini,
 Modern Throttle Grip Right Mk1 (Standard/Max Config),MTG-R,MTGR,MTGR_Max,
-Modern Throttle Grip Right Mk1 (All 5-way),MTG-R,MTGR,MTGR_5Way,
 Modern Throttle Grip Right Mk2 (Mini Config),MTG-R,MTGR,MTGR2_Mini,
 Modern Throttle Grip Right Mk2 (Standard/Max Config),MTG-R,MTGR,MTGR2_Max,
-Modern Throttle Grip Right Mk2 (All 5-way / MB1 stick),MTG-R,MTGR,MTGR2_5Way,
+Modern Throttle Grip Right (Custom),MTG-R,MTGR,#MTGR,
 STEM,STEM,STEM,STEM,STEM

@@ -23,7 +23,7 @@ namespace VKB_Mobiflight_Definer
             string[] csvparts = csv.Split(',');
             return new ModuleArchetype(csvparts[0], csvparts[1], csvparts[2], csvparts[3], csvparts[4]);
         }
-        public Module CreateModule()
+        public Module CreateModule(string PathPrefix = "")
         {
             ModulesCreated++;
             string Label = LabelPrefix;
@@ -33,7 +33,16 @@ namespace VKB_Mobiflight_Definer
                 Label += String.Format(" {0}", ModulesCreated);
                 Id += ModulesCreated;
             }
-            return new Module(DescriptiveName, Label, Id, ButtonFileName, LedFileName);
+            return new Module(DescriptiveName, Label, Id, ButtonFileName, LedFileName, PathPrefix);
+        }
+        public ModuleArchetype Clone()
+        {
+            var ret = new ModuleArchetype(DescriptiveName, LabelPrefix, IdPrefix, ButtonFileName, LedFileName)
+            {
+                ModulesCreated = ModulesCreated
+            };
+            ModulesCreated++;
+            return ret;
         }
     }
 }

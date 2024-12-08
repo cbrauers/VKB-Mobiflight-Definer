@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Services;
+using VKB_Mobiflight_Definer.customizers.MTGR;
 
 namespace VKB_Mobiflight_Definer
 {
@@ -92,7 +93,27 @@ namespace VKB_Mobiflight_Definer
                 modulechoice = PromptNumber("Add Module", 0, listlength);
                 if(modulechoice != 0)
                 {
-                    Module mod = Device.AddModule(ModuleArchetypes[modulechoice-1]);
+                    var archetypeChoice = ModuleArchetypes[modulechoice-1];
+                    Module mod = null;
+                    if (archetypeChoice.ButtonFileName.StartsWith("#"))
+                    {
+                        if(archetypeChoice.ButtonFileName == "#MTGR")
+                        {
+                            var customizer = new MTGRCustomizer(archetypeChoice);
+                            customizer.Interactive();
+                            mod = customizer.GenerateModule();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Module customizer not found");
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        mod = archetypeChoice.CreateModule();
+                    }
+                    Device.AddModule(mod);
                     int modbuttons = mod.GetNumberOfButtons();
                     if (modbuttons != 0)
                     {
@@ -215,7 +236,7 @@ namespace VKB_Mobiflight_Definer
                 sr.Close();
             }
         }
-        private static int PromptNumber(string message, int minvalue = 1, int maxvalue = 0, int defaultvalue = -1)
+        public static int PromptNumber(string message, int minvalue = 1, int maxvalue = 0, int defaultvalue = -1)
         {
             int selection;
             bool valid;
