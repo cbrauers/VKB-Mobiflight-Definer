@@ -238,6 +238,10 @@ namespace VKB_Mobiflight_Definer
         }
         public static int PromptNumber(string message, int minvalue = 1, int maxvalue = 0, int defaultvalue = -1)
         {
+            return PromptNumber(message, minvalue, maxvalue, defaultvalue, out _);
+        }
+        public static int PromptNumber(string message, int minvalue, int maxvalue, int defaultvalue, out int leadingzeroes)
+        {
             int selection;
             bool valid;
             do
@@ -270,9 +274,11 @@ namespace VKB_Mobiflight_Definer
                 {
                     selection = defaultvalue;
                     valid = true;
+                    leadingzeroes = 0;
                 }
                 else
                 {
+                    leadingzeroes = entry.TakeWhile(c => c == '0').Count();
                     valid = int.TryParse(entry, out selection);
                 }
                 if (maxvalue > 0 && selection > maxvalue) valid = false;

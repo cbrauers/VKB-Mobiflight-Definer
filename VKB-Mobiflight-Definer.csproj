@@ -92,6 +92,9 @@
     <None Include="Buttons\STEM.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Buttons\STG.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Buttons\THQ.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -173,6 +176,9 @@
     <None Include="Customizers\MTGR\Radio\Modules.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Customizers\MTGR\Presets.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Encoders\EVO_KG12.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -186,6 +192,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Encoders\FSMGA.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Encoders\STG.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Encoders\MTGL.csv">
@@ -230,6 +239,9 @@
     <None Include="LEDs\STEM.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="LEDs\STG.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Modules.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -257,6 +269,7 @@
     <Compile Include="src\Button.cs" />
     <Compile Include="src\customizers\MTGR\ModuleSlotArchetype.cs" />
     <Compile Include="src\customizers\MTGR\MTGRCustomizer.cs" />
+    <Compile Include="src\customizers\MTGR\PresetArchetype.cs" />
     <Compile Include="src\Encoder.cs" />
     <Compile Include="src\JoystickDevice.cs" />
     <Compile Include="src\Led.cs" />
